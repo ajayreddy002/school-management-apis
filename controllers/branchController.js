@@ -1,4 +1,6 @@
 const branchModel = require('../models/branchModel');
+var schoolAdminSchema = require('../models/schoolAdminModel');
+var mongoose = require('mongoose');
 const saltRounds = 10;
 const bcrypt = require('bcrypt');
 require('dotenv').config();
@@ -64,6 +66,31 @@ module.exports = {
             }).catch(e => {
                 res.send({ message: 'No Details Found' })
             })
+        }
+    },
+    index: (req, res) => {
+        if (req.params.school_id) {
+            console.log(req.params.school_id);
+            try {
+                schoolAdminSchema.aggregate([
+                    { $match: { "_id": mongoose.Types.ObjectId(req.params.school_id) } },
+                    {
+                        $lookup: {
+                            from: "branches",
+                            localField: "_id",
+                            foreignField: "school_id",
+                            as: "branchData"
+                        }
+                    },
+                    { $unwind: "$branchData" },
+                ]).then(data => {
+                    res.status(200).send({ result: [data[0].branchData] })
+                }).catch(e => {
+                    res.send("No Data Found")
+                })
+            } catch (e) {
+                res.status(400).send({ message: 'Please check your details', error: true })
+            }
         }
     }
 }

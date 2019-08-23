@@ -12,4 +12,5 @@ router.post('/addschool', schoolController.create);
 router.post('/loginschool', schoolController.loginSchoolAdmin);
 router.post('/addbranch', schoolAdmin.checkUserToken ,branchController.create);
 router.post('/loginbranch',branchController.login);
+router.get('/getbranch/:school_id',branchController.index);
 module.exports = router;
