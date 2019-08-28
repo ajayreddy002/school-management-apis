@@ -4,7 +4,7 @@
     "version": "0.1",
     "title": "School Management App"
   },
-  "host": "management-school-api.herokuapp.com",
+  "host": "management-school-api.herokuapp.com/",
   "basePath": "/",
   "tags": [
     {
@@ -134,9 +134,6 @@
       "post": {
         "tags": [
           "Branch"
-        ],
-        "security": [
-          "Bearer"
         ],
         "operationId": "create",
         "summary": "This is to add branch to school",
@@ -443,7 +440,7 @@
     }
   },
   "securityDefinitions": {
-    "Authorization": {
+    "Bearer": {
       "type": "apiKey",
       "name": "Authorization"
     }
