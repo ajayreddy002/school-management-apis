@@ -4,7 +4,7 @@
     "version": "0.1",
     "title": "School Management App"
   },
-  "host": "management-school-api.herokuapp.com/",
+  "host": "management-school-api.herokuapp.com",
   "basePath": "/",
   "tags": [
     {
