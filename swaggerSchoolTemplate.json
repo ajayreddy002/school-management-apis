@@ -135,6 +135,9 @@
         "tags": [
           "Branch"
         ],
+        "security": [
+          "Bearer"
+        ],
         "operationId": "create",
         "summary": "This is to add branch to school",
         "description": "This is to add branch to school",
@@ -437,6 +440,12 @@
         "success",
         "description"
       ]
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization"
     }
   }
 }
