@@ -1,10 +1,10 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "0.0.1",
+    "version": "0.1",
     "title": "School Management App"
   },
-  "host": "localhost:3000",
+  "host": "management-school-api.herokuapp.com/",
   "basePath": "/",
   "tags": [
     {

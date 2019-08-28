@@ -9,16 +9,9 @@ class Database {
     }
 
     _connect() {
-        // const uri = `mongodb+srv://${process.env.db_name}:${process.env.db_password}@cluster0-1fivm.mongodb.net/school-management?retryWrites=true&w=majority`;
-        // mongoose.connect(uri, { useNewUrlParser: true })
-        //     .then(() => {
-        //         console.log('Database connection successful');
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //         console.error('Database connection error')
-        //     })
-        mongoose.connect(`mongodb://${server}/${database}`, { useNewUrlParser: true })
+        // This is for to work in env
+        const uri = `mongodb+srv://${process.env.db_name}:${process.env.db_password}@cluster0-1fivm.mongodb.net/school-management?retryWrites=true&w=majority`;
+        mongoose.connect(uri, { useNewUrlParser: true })
             .then(() => {
                 console.log('Database connection successful');
             })
@@ -26,6 +19,15 @@ class Database {
                 console.log(err)
                 console.error('Database connection error')
             })
+        // This is for to work in dev mode
+        // mongoose.connect(`mongodb://${server}/${database}`, { useNewUrlParser: true })
+        //     .then(() => {
+        //         console.log('Database connection successful');
+        //     })
+        //     .catch(err => {
+        //         console.log(err)
+        //         console.error('Database connection error')
+        //     });
     }
 }
 module.exports = new Database()
