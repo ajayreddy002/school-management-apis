@@ -4,9 +4,10 @@ require('dotenv').config();
 var jwt = require('jsonwebtoken');
 const saltRounds = 10;
 module.exports = {
-    create: (req, res, next) => {
+    create: (req, res) => {
+        console.log(req.body)
         if (req.body.school_name && req.body.user_name && req.body.email && req.body.password
-            && req.body.roll && req.body.address) {
+            && req.body.roll && req.body.school_address) {
             bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
                 const createSchoolAdmin = new schoolAdminSchema({
                     school_name: req.body.school_name,
@@ -14,15 +15,13 @@ module.exports = {
                     email: req.body.email,
                     password: hash,
                     roll: req.body.roll,
-                    address: req.body.address,
+                    address: req.body.school_address,
                     created_at: Date.now(),
                     updated_at: Date.now()
                 });
                 createSchoolAdmin.save().then(data => {
-                    console.log(data);
-                    res.status(200).send(data)
+                    res.status(200).send({message:  `${data.user_name}User registered successfully`});
                 }).catch(err => {
-                    console.log(err);
                     res.status(403).send({ message: err.message })
                 })
             });

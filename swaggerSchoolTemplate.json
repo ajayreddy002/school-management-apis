@@ -1,0 +1,442 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "School Management App"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "School"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/school": {
+      "x-swagger-router-controller": "schoolController",
+      "post": {
+        "tags": [
+          "School"
+        ],
+        "operationId": "create",
+        "summary": "This is to add school to db",
+        "description": "This is to add new school to db",
+        "parameters": [
+          {
+            "name": "schoolData",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/AddSchoolModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "School Added successfully",
+            "schema": {
+              "$ref": "#/definitions/AddSchoolModel"
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "School"
+        ],
+        "summary": "This is to update school details",
+        "description": "This is to update school details",
+        "parameters": [
+          {
+            "name": "school_id",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateSchoolModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "School details updated successfully",
+            "schema": {
+              "$ref": "#/definitions/GeneralResponse"
+            }
+          },
+          "403": {
+            "description": "Not Authourized"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/loginschool": {
+      "x-swagger-router-controller": "schoolController",
+      "post": {
+        "tags": [
+          "School"
+        ],
+        "operationId": "loginSchoolAdmin",
+        "summary": "Get the scholl details",
+        "description": "Get the school details",
+        "parameters": [
+          {
+            "name": "schoolData",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/GetSchoolResponse"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "School Added successfully",
+            "schema": {
+              "$ref": "#/definitions/GetSchoolResponse"
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/branch": {
+      "x-swagger-router-controller": "branchController",
+      "post": {
+        "tags": [
+          "Branch"
+        ],
+        "operationId": "create",
+        "summary": "This is to add branch to school",
+        "description": "This is to add branch to school",
+        "parameters": [
+          {
+            "name": "branchData",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/AddBranchModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Branch Added successfully",
+            "schema": {
+              "$ref": "#/definitions/AddBranchModel"
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Branch"
+        ],
+        "summary": "This is to update branch details",
+        "description": "This is to update branch details",
+        "parameters": [
+          {
+            "name": "branch_id",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateSchoolModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "School details updated successfully",
+            "schema": {
+              "$ref": "#/definitions/GeneralResponse"
+            }
+          },
+          "403": {
+            "description": "Not Authourized"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/branch/{schoolId}": {
+      "x-swagger-router-controller": "branchController",
+      "parameters": [
+        {
+          "name": "schoolId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user that we want to find",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Branch"
+        ],
+        "operationId": "index",
+        "summary": "Get branches with given school ID",
+        "responses": {
+          "200": {
+            "description": "Branches",
+            "schema": {
+              "$ref": "#/definitions/Branches"
+            }
+          }
+        }
+      }
+    },
+    "/loginbranch": {
+      "x-swagger-router-controller": "branchController",
+      "post": {
+        "tags": [
+          "Branch"
+        ],
+        "operationId": "login",
+        "summary": "Get the branch details",
+        "description": "Get the branch details",
+        "parameters": [
+          {
+            "name": "schoolData",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/GetSchoolResponse"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "School Added successfully",
+            "schema": {
+              "$ref": "#/definitions/GetSchoolResponse"
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/swagger": {
+      "x-swagger-pipe": "swagger_raw"
+    }
+  },
+  "definitions": {
+    "ErrorResponse": {
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "GetSchoolResponse": {
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "AddSchoolModel": {
+      "required": [
+        "school_name",
+        "email",
+        "password",
+        "user_name",
+        "school_address",
+        "roll"
+      ],
+      "properties": {
+        "school_name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "user_name": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "school_address": {
+          "type": "string"
+        },
+        "roll": {
+          "type": "number"
+        }
+      }
+    },
+    "AddBranchModel": {
+      "required": [
+        "branch_name",
+        "email",
+        "password",
+        "user_name",
+        "branch_address",
+        "roll",
+        "school_id"
+      ],
+      "properties": {
+        "branch_name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "user_name": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "branch_address": {
+          "type": "string"
+        },
+        "roll": {
+          "type": "number"
+        },
+        "school_id": {
+          "type": "integer"
+        }
+      }
+    },
+    "UpdateSchoolModel": {
+      "required": [
+        "school_id",
+        "email"
+      ],
+      "properties": {
+        "school_name": {
+          "type": "string"
+        },
+        "school_id": {
+          "type": "integer"
+        },
+        "email": {
+          "type": "string"
+        },
+        "user_name": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "school_address": {
+          "type": "string"
+        },
+        "roll": {
+          "type": "number"
+        }
+      }
+    },
+    "UpdateBranchModel": {
+      "required": [
+        "branch_id",
+        "school_id"
+      ],
+      "properties": {
+        "branch_name": {
+          "type": "string"
+        },
+        "school_id": {
+          "type": "integer"
+        },
+        "branch_id": {
+          "type": "integer"
+        },
+        "email": {
+          "type": "string"
+        },
+        "user_name": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "branch_address": {
+          "type": "string"
+        },
+        "roll": {
+          "type": "number"
+        }
+      }
+    },
+    "Branches": {
+      "type": "array",
+      "$ref": "#/definitions/AddBranchModel"
+    },
+    "GeneralResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "number",
+          "description": "returns 1 if successful"
+        },
+        "description": {
+          "type": "string",
+          "description": "a short comment"
+        }
+      },
+      "required": [
+        "success",
+        "description"
+      ]
+    }
+  }
+}

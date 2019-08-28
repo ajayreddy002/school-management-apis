@@ -70,7 +70,6 @@ module.exports = {
     },
     index: (req, res) => {
         if (req.params.school_id) {
-            console.log(req.params.school_id);
             try {
                 schoolAdminSchema.aggregate([
                     { $match: { "_id": mongoose.Types.ObjectId(req.params.school_id) } },
@@ -79,12 +78,17 @@ module.exports = {
                             from: "branches",
                             localField: "_id",
                             foreignField: "school_id",
-                            as: "branchData"
+                            as: "result"
                         }
                     },
-                    { $unwind: "$branchData" },
+                    { $unwind: "$result" },
                 ]).then(data => {
-                    res.status(200).send({ result: [data[0].branchData] })
+                    const filteredData = []
+                    data.map(item => {
+                        delete item.result.password
+                        filteredData.push(item.result)
+                    })
+                    res.status(200).send({ branchDetails: filteredData })
                 }).catch(e => {
                     res.send("No Data Found")
                 })

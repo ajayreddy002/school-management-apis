@@ -1,16 +1,24 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../middleware/db.middleware');
-var schoolController = require('../controllers/schoolAdminController');
+var schoolController = require('../controllers/schoolController');
 var branchController = require('../controllers/branchController');
+var studentController = require('../controllers/studentController');
 const schoolAdmin = require('../middleware/userTokenValidateMiddleware');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../swaggerSchoolTemplate.json');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
-router.post('/addschool', schoolController.create);
+// School Admin and school routes
+router.post('/school', schoolController.create);
 router.post('/loginschool', schoolController.loginSchoolAdmin);
+// Branch Routes
 router.post('/addbranch', schoolAdmin.checkUserToken ,branchController.create);
 router.post('/loginbranch',branchController.login);
-router.get('/getbranch/:school_id',branchController.index);
+router.get('/branch/:school_id',branchController.index);
+// Students routes
+router.post('/student',studentController.create);
+
 module.exports = router;
