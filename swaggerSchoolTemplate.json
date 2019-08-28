@@ -443,7 +443,7 @@
     }
   },
   "securityDefinitions": {
-    "Bearer": {
+    "Authorization": {
       "type": "apiKey",
       "name": "Authorization"
     }

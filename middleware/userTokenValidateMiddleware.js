@@ -4,6 +4,7 @@ var schoolAdminSchema = require('../models/schoolAdminModel');
 let checkUserToken = (req, res, next) => {
   let token = req.headers['x-access-token'] || req.headers['authorization']; // Express headers are auto converted to lowercase
   if (token) {
+    console.log(token)
     jwt.verify(token, process.env.private_key, (err, decoded) => {
       if (err) {
         return res.json({
