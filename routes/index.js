@@ -18,6 +18,7 @@ router.post('/loginschool', schoolController.loginSchoolAdmin);
 router.post('/addbranch', schoolAdmin.checkUserToken ,branchController.create);
 router.post('/loginbranch',branchController.login);
 router.get('/branch/:school_id',branchController.index);
+router.delete('/branch/:branch_id', schoolAdmin.checkUserToken, branchController.delete);
 // Students routes
 router.post('/student',studentController.create);
 

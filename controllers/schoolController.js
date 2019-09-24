@@ -26,7 +26,7 @@ module.exports = {
                 })
             });
         } else {
-            res.status(403).send({ message: 'Required parameters are missing' })
+            res.status(403).send( 'Required parameters are missing' )
         }
     },
     loginSchoolAdmin: (req, res) => {

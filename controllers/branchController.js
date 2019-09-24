@@ -96,5 +96,18 @@ module.exports = {
                 res.status(400).send({ message: 'Please check your details', error: true })
             }
         }
+    },
+    delete:(req, res) => {
+        if(req.params.branch_id) {
+            branchModel.remove({
+                _id: req.params.branch_id
+            }).then(data => {
+                res.status(200).send({ message: 'Branch deleted', error: false })
+            }).catch(e => {
+                console.log(e)
+            })
+        } else {
+            res.status(400).send({ message: 'Please check your details', error: true })
+        }
     }
 }

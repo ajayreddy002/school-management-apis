@@ -7,6 +7,7 @@ let checkUserToken = (req, res, next) => {
     console.log(token)
     jwt.verify(token, process.env.private_key, (err, decoded) => {
       if (err) {
+        console.log(err)
         return res.json({
           success: false,
           message: 'Token is not valid'
