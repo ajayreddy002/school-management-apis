@@ -8,7 +8,7 @@ let checkUserToken = (req, res, next) => {
     jwt.verify(token, process.env.private_key, (err, decoded) => {
       if (err) {
         console.log(err)
-        return res.json({
+        return res.status(403).send({
           success: false,
           message: 'Token is not valid'
         });
@@ -19,7 +19,7 @@ let checkUserToken = (req, res, next) => {
             if (data.length > 0 && data[0].roll === decoded.roll) {
               next();
             } else {
-              return res.json({
+              return res.status(403).send({
                 success: false,
                 message: 'You are Not Authuorized'
               });
@@ -28,7 +28,7 @@ let checkUserToken = (req, res, next) => {
       }
     });
   } else {
-    return res.json({
+    return res.status(403).send({
       success: false,
       message: 'Auth token is not supplied'
     });

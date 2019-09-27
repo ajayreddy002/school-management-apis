@@ -4,10 +4,10 @@ var db = require('../middleware/db.middleware');
 var schoolController = require('../controllers/schoolController');
 var branchController = require('../controllers/branchController');
 var studentController = require('../controllers/studentController');
+var teacherController = require('../controllers/teacherCOntroller');
 const schoolAdmin = require('../middleware/userTokenValidateMiddleware');
+const branchTokenValidator = require('../middleware/branchTokenValidate');
 const loginController = require('../controllers/loginComtroller');
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('../swaggerSchoolTemplate.json');
 /* GET home page. */
 router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
@@ -21,6 +21,8 @@ router.post('/loginbranch', branchController.login);
 router.get('/branch/:school_id', schoolAdmin.checkUserToken, branchController.index);
 router.delete('/branch/:branch_id', schoolAdmin.checkUserToken, branchController.delete);
 // Students routes
-router.post('/student', studentController.create);
+router.post('/student', branchTokenValidator.checkBranchToken, studentController.create);
+// Teacher routes
+router.post('/teacher', branchTokenValidator.checkBranchToken, teacherController.create);
 
 module.exports = router;

@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 require('dotenv').config();
 var jwt = require('jsonwebtoken');
 const branchModel = require('../models/branchModel');
+const teacherModel = require('../models/teacherModel');
 const saltRounds = 10;
 loginMethods = module.exports = {
     login: async (req, res) => {
@@ -49,9 +50,8 @@ loginMethods = module.exports = {
         branchModel.find({
             email: req.body.email,
         }).then(data => {
-            console.log(data)
             if (data.length === 0) {
-                res.send({ message: 'No Details Found' })
+                loginMethods.loginTeacher(req, res);
             } else {
                 delete data[0].email;
                 bcrypt.compare(req.body.password, data[0].password, function (err, result) {
@@ -63,6 +63,7 @@ loginMethods = module.exports = {
                             address: data[0].address,
                             branch_id: data[0]._id,
                             school_id: data[0].school_id,
+                            branch_name: data[0].branch_name
                         };
                         payload = { email: req.body.email, roll: data[0].roll, name: data[0].user_name };
                         options = { expiresIn: '2h' };
@@ -76,7 +77,40 @@ loginMethods = module.exports = {
                 });
             }
         }).catch(e => {
-            res.send({ message: 'No Details Found' })
+            res.status(204).send({ message: 'No Details Found' })
+        })
+    },
+    loginTeacher: (req, res) => {
+        teacherModel.find({
+            email: req.body.email,
+        }).then(data => {
+            if (data.length === 0) {
+                res.status(204).send({ message: 'No Details Found' });
+            } else {
+                delete data[0].email;
+                bcrypt.compare(req.body.password, data[0].password, function (err, result) {
+                    if (result === true) {
+                        const userData = {
+                            email: data[0].email,
+                            user_name: data[0].teacher_name,
+                            roll: data[0].roll,
+                            branch_id: data[0]._id,
+                            school_id: data[0].school_id,
+                            branch_name: data[0].branch_name
+                        };
+                        payload = { email: req.body.email, roll: data[0].roll, name: data[0].teacher_name };
+                        options = { expiresIn: '2h' };
+                        iat = Math.floor(Date.now() / 1000) - 30
+                        secret = process.env.private_key;
+                        const token = jwt.sign(payload, secret, options, iat);
+                        res.status(200).send({ result: [userData], message: 'Login successfull', access_token: token });
+                    } else {
+                        res.send({ message: 'Please enter valid details' })
+                    }
+                });
+            }
+        }).catch(e => {
+            res.status(204).send({ message: 'No Details Found' })
         })
     }
 }

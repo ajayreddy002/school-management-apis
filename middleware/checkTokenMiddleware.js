@@ -11,7 +11,7 @@ let checkToken = (req, res, next) => {
   if (token) {
     jwt.verify(token, process.env.private_key, (err, decoded) => {
       if (err) {
-        return res.json({
+        return res.status(403).send({
           success: false,
           message: 'Token is not valid'
         });
@@ -21,7 +21,7 @@ let checkToken = (req, res, next) => {
       }
     });
   } else {
-    return res.json({
+    return  res.status(403).send({
       success: false,
       message: 'Auth token is not supplied'
     });
